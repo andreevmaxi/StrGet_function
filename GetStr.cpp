@@ -1,0 +1,62 @@
+/*!
+* @mainpage
+* this is function of reading array of chars
+*/
+
+/*!
+* \file GetStr.cpp
+*/
+
+#include <cstdio>
+#include <cassert>
+
+/**
+    \brief GetStr
+    \author andreevmaxi
+	\version 1.0
+	\date september 2019 year
+	\copyright korobcom
+    \details This is function that prints your array of chars until it founds '\0'
+    \return Returns 1 if everything is okey
+    \param[out] str array of chars that was read in FILE read
+    \param[in] Nchars number of reading chars
+    \param[in] read pointer on reading file
+*/
+
+bool GetStr(char* str, int Nchars, FILE* read);
+
+int main()
+{
+    FILE* fp;
+    char strin[128] = "";
+
+    assert( (fp = fopen("text.txt", "r") ) != NULL);
+
+    if(GetStr(strin, 124, fp))
+    {
+        printf("%s", strin);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+bool GetStr(char* str, int Nchars, FILE* read)
+{
+    assert (str != NULL);
+    assert (read != NULL);
+
+    char tmp;
+    int i = 0;
+    tmp = {};
+
+    tmp = (char)fgetc(read);
+    while((tmp != '\n') && (tmp != EOF) && (Nchars > i))
+    {
+        str[i] = tmp;
+        ++i;
+        tmp = (char)fgetc(read);
+    }
+    str[i] = tmp;
+    return 1;
+}
